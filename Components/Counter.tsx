@@ -3,11 +3,11 @@ import SmokeIcon from "../assets/SVGIcons/smoking-svgrepo-com";
 
 type Props = {
   count: number;
-  handleIncrement: () => void;
+  handleChange: (number: number) => void;
   smokeIconStyle: object;
 };
 
-const Counter = ({ count, handleIncrement, smokeIconStyle }: Props) => {
+const Counter = ({ count, handleChange, smokeIconStyle }: Props) => {
   return (
     <View>
       <View>
@@ -15,11 +15,16 @@ const Counter = ({ count, handleIncrement, smokeIconStyle }: Props) => {
       </View>
       <View style={styles.countBtnGrid}>
         <View>
+          <Pressable onPress={() => handleChange(count - 1)}>
+            <Text style={{ fontSize: 40 }}>-</Text>
+          </Pressable>
+        </View>
+        <View>
           <Text style={smokeIconStyle}>{count}</Text>
         </View>
         <View>
-          <Pressable onPress={handleIncrement}>
-            <SmokeIcon />
+          <Pressable onPress={() => handleChange(count + 1)}>
+            <Text style={{ fontSize: 40 }}>+</Text>
           </Pressable>
         </View>
       </View>

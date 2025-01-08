@@ -3,7 +3,7 @@ import Button from "./Components/Buttons";
 import Svg from "react-native-svg";
 import IconComponent from "./assets/SVGIcons/hamburger-menu-svgrepo-com";
 import BellIcon from "./assets/SVGIcons/bell-icon-silhouette-svgrepo-com";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HouseIcon from "./assets/SVGIcons/home-icon-silhouette-svgrepo-com";
 import AboutApp from "./assets/SVGIcons/information-circle-svgrepo-com";
 import AboutUs from "./assets/SVGIcons/about-us-svgrepo-com";
@@ -11,6 +11,8 @@ import Setting from "./assets/SVGIcons/settings-svgrepo-com";
 import Close from "./assets/SVGIcons/close-ellipse-svgrepo-com";
 import Counter from "./Components/Counter";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import Graph from "./Components/Graph";
+import { supabase } from "./supabase";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState<Boolean>(false);
@@ -30,6 +32,33 @@ const App = () => {
   function handelDarkAndLightMode() {
     setIsDarkMode(!isDarkMode);
   }
+
+  const fetchTotalData = async () => {
+    const { data, error } = await supabase
+      .from("tracker")
+      .select()
+      .match({ id: 1 })
+      .single();
+    if (error) {
+      console.log("error", error);
+      return;
+    }
+
+    setCount(data.total);
+  };
+
+  const handleChange = async (number: number) => {
+    const data = await supabase
+      .from("tracker")
+      .update({ total: number })
+      .eq("id", 1);
+
+    fetchTotalData();
+  };
+
+  useEffect(() => {
+    fetchTotalData();
+  }, []);
 
   const navigationView = (
     <View
@@ -116,15 +145,14 @@ const App = () => {
         </View>
         <Counter
           count={count}
-          handleIncrement={() => {
-            setCount(count + 1);
-          }}
+          handleChange={(number) => handleChange(number)}
           smokeIconStyle={{
             color: danger ? "red" : warning ? "brown" : "black",
             fontSize: 128,
             fontWeight: 800,
           }}
         />
+        <Graph />
       </View>
     </DrawerLayoutAndroid>
   );
