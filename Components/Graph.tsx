@@ -1,9 +1,9 @@
-import { Dimensions, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 const Graph = () => {
   return (
-    <View>
+    <View style={styles.wrapper}>
       <LineChart
         withShadow={false}
         data={{
@@ -14,7 +14,7 @@ const Graph = () => {
             },
           ],
         }}
-        width={Dimensions.get("window").width}
+        width={Dimensions.get("window").width - 100}
         height={200}
         chartConfig={{
           //   backgroundColor: "#e26a00",
@@ -38,3 +38,9 @@ const Graph = () => {
 };
 
 export default Graph;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: "100%",
+  },
+});

@@ -10,9 +10,9 @@ import AboutUs from "./assets/SVGIcons/about-us-svgrepo-com";
 import Setting from "./assets/SVGIcons/settings-svgrepo-com";
 import Close from "./assets/SVGIcons/close-ellipse-svgrepo-com";
 import Counter from "./Components/Counter";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import Graph from "./Components/Graph";
 import { supabase } from "./supabase";
+import Reward from "./Components/Reward";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState<Boolean>(false);
@@ -139,9 +139,12 @@ const App = () => {
           <View style={styles.bellIcon}>
             <BellIcon color={isDarkMode ? "white" : ""} />
           </View>
-          <View>
+          {/* <View>
             <Button title="Mode" onPress={handelDarkAndLightMode} />
-          </View>
+          </View> */}
+        </View>
+        <View style={styles.rewardwrapper}>
+          <Reward />
         </View>
         <Counter
           count={count}
@@ -162,6 +165,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    gap: 20,
   },
   darkContainer: {
     flex: 1,
@@ -214,6 +221,11 @@ const styles = StyleSheet.create({
   drawerTextContainer: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
+  },
+  rewardwrapper: {
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
   },
 });
